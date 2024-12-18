@@ -516,7 +516,7 @@ app.get('/get_all_users', async (req, res) => {
             }
         }
         else{
-            const skillUserQuery = `SELECT u.username, u.first_name, u.last_name, u.role, s.python
+            const skillUserQuery = `SELECT u.username, u.first_name, u.last_name, u.role
                 FROM users AS u
                 JOIN skills AS s ON s.username = u.username
                 WHERE s.${skill} = true;
