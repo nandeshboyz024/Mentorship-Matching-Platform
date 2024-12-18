@@ -14,10 +14,12 @@ function ViewProfile() {
   const [bio, setBio] = useState('');
   const navigate = useNavigate();
 
+  const API_BASE_URL = process.env.REACT_APP_PROXY_URL;
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`/get-user?username=${username}`);
+        const response = await axios.get(`${API_BASE_URL}/get-user?username=${username}`);
         setSelectedUser(response.data.user);
         setSkills(response.data.skills);
         setBio(response.data.bio);
@@ -26,14 +28,14 @@ function ViewProfile() {
       }
     };
     if (isAuthenticated) fetchUserData();
-  }, [isAuthenticated, username]);
+  }, [isAuthenticated, username, API_BASE_URL]);
 
   const handleDeleteAccount = async () => {
     const confirmed = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
     if (!confirmed) return;
     
     try {
-        const response = await fetch('/delete_account', {
+        const response = await fetch(`${API_BASE_URL}/delete_account`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

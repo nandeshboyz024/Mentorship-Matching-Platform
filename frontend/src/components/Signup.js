@@ -5,6 +5,8 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/App.css';
 
+const API_BASE_URL = process.env.REACT_APP_PROXY_URL;
+
 function Signup() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -49,7 +51,7 @@ function Signup() {
     setLoading(true);
 
     try {
-      const response = await axios.post('/create_account', formData);
+      const response = await axios.post(`${API_BASE_URL}/create_account`, formData);
       if (response.data.success) {
         navigate('/login');
       } else {

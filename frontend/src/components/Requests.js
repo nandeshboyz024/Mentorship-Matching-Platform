@@ -6,6 +6,7 @@ import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const API_BASE_URL = process.env.REACT_APP_PROXY_URL;
 
 function Requests() {
     const { user, isAuthenticated } = useContext(userContext); 
@@ -17,7 +18,7 @@ function Requests() {
         const fetchRequests = async () => {
             try {
                 if(user.role==='mentee'){
-                    const response = await axios.post('/request-status-for-mentee', {
+                    const response = await axios.post(`${API_BASE_URL}/request-status-for-mentee`, {
                         mentee_username: user.username
                     });
                     if (response.data.success) {
@@ -27,7 +28,7 @@ function Requests() {
                     }
                 }
                 else{
-                    const response = await axios.post('/request-status-for-mentor', {
+                    const response = await axios.post(`${API_BASE_URL}/request-status-for-mentor`, {
                         mentor_username: user.username
                     });
                     if (response.data.success) {
@@ -65,7 +66,7 @@ function Requests() {
                     message: `your request is rejected by ${user.username}`
                 };
             }
-            const response = await axios.delete('/delete-request', {params});
+            const response = await axios.delete(`${API_BASE_URL}/delete-request`, {params});
             if (response.data.success) {
                 if(user.role==='mentee'){
                     setRequests((prevRequests) =>
@@ -88,7 +89,7 @@ function Requests() {
 
     const AcceptRequest = async (menteeUsername) => {
         try {
-            const response = await axios.put('/accept-request', {
+            const response = await axios.put(`${API_BASE_URL}/accept-request`, {
                     mentee_username: menteeUsername,
                     mentor_username: user.username,
                     notify_to: menteeUsername,
@@ -111,7 +112,7 @@ function Requests() {
         if (!confirmed) return;
         
         try {
-            const response = await fetch('/delete_account', {
+            const response = await fetch(`${API_BASE_URL}/delete_account`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

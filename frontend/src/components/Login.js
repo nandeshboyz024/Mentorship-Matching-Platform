@@ -5,6 +5,8 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/App.css';
 
+const API_BASE_URL = process.env.REACT_APP_PROXY_URL;
+
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -32,7 +34,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch('/find-user', {
+      const response = await fetch(`${API_BASE_URL}/find-user`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

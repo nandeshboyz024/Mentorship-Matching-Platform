@@ -5,6 +5,8 @@ import {Link, Navigate, useNavigate } from 'react-router-dom';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const API_BASE_URL = process.env.REACT_APP_PROXY_URL;
+
 function Profile() {
   const { user, isAuthenticated, bio, skills} = useContext(userContext);
   const navigate = useNavigate();
@@ -14,7 +16,7 @@ function Profile() {
     if (!confirmed) return;
     
     try {
-        const response = await fetch('/delete_account', {
+        const response = await fetch(`${API_BASE_URL}/delete_account`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

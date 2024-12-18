@@ -4,6 +4,8 @@ import { userContext } from '../context/UserContext';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const API_BASE_URL = process.env.REACT_APP_PROXY_URL;
+
 const SkillsForm = () => {
   const { user, skills, updateSkills } = useContext(userContext);
   const [currentSkills, setCurrentSkills] = useState({});
@@ -67,7 +69,7 @@ const SkillsForm = () => {
   const handleUpdate = async() => {
     setLoading2(true);
     try {
-        const response = await fetch('/update-user-skills', {
+        const response = await fetch(`${API_BASE_URL}/update-user-skills`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

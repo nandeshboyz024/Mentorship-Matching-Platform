@@ -6,6 +6,8 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SkillsForm from './SkillsForm';
 
+const API_BASE_URL = process.env.REACT_APP_PROXY_URL;
+
 function EditProfile() {
     const { user, isAuthenticated, bio, updateBio } = useContext(userContext); 
     const [bioText, setBioText] = useState(bio || '');
@@ -20,7 +22,7 @@ function EditProfile() {
     const handleUpdateBio = async () => {
         setLoading1(true);
         try {
-            const response = await fetch('/update-user-bio', {
+            const response = await fetch(`${API_BASE_URL}/update-user-bio`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +47,7 @@ function EditProfile() {
         const confirmed = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
         if (!confirmed) return;
         try {
-            const response = await fetch('/delete_account', {
+            const response = await fetch(`${API_BASE_URL}/delete_account`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

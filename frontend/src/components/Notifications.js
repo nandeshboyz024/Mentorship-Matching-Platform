@@ -6,6 +6,8 @@ import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const API_BASE_URL = process.env.REACT_APP_PROXY_URL;
+
 function Notifications() {
     const { user, isAuthenticated } = useContext(userContext); 
     const [notifications, setNotifications] = useState([]);
@@ -16,7 +18,7 @@ function Notifications() {
         if (isAuthenticated) {
             const fetchAndDeleteNotifications = async () => {
                 try {
-                    const response = await axios.get(`/get-and-delete-notifications?username=${user.username}`);
+                    const response = await axios.get(`${API_BASE_URL}/get-and-delete-notifications?username=${user.username}`);
                     
                     if (response.data.success) {
                         setNotifications(response.data.deletedNotifications);
@@ -36,7 +38,7 @@ function Notifications() {
         if (!confirmed) return;
         
         try {
-            const response = await fetch('/delete_account', {
+            const response = await fetch(`${API_BASE_URL}/delete_account`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

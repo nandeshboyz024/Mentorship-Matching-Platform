@@ -6,6 +6,8 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
+const API_BASE_URL = process.env.REACT_APP_PROXY_URL;
+
 function MentorMentee() {
     const { user, isAuthenticated } = useContext(userContext); 
     const [requests, setRequests] = useState([]);
@@ -16,7 +18,7 @@ function MentorMentee() {
         const fetchRequests = async () => {
             try {
                 if(user.role==='mentee'){
-                    const response = await axios.post('/accepted-request-for-mentee', {
+                    const response = await axios.post(`${API_BASE_URL}/accepted-request-for-mentee`, {
                         mentee_username: user.username
                     });
                     if (response.data.success) {
@@ -26,7 +28,7 @@ function MentorMentee() {
                     }
                 }
                 else{
-                    const response = await axios.post('/accepted-request-for-mentor', {
+                    const response = await axios.post(`${API_BASE_URL}/accepted-request-for-mentor`, {
                         mentor_username: user.username
                     });
                     if (response.data.success) {
@@ -65,7 +67,7 @@ function MentorMentee() {
                     message: `your request is rejected by ${user.username}`
                 };
             }
-            const response = await axios.delete('/delete-request', { params });
+            const response = await axios.delete(`${API_BASE_URL}/delete-request`, { params });
 
             if (response.data.success) {
                 if(user.role==='mentee'){
@@ -91,7 +93,7 @@ function MentorMentee() {
         if (!confirmed) return;
         
         try {
-            const response = await fetch('/delete_account', {
+            const response = await fetch(`${API_BASE_URL}/delete_account`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

@@ -7,17 +7,19 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/UserCards.css';
 
+const API_BASE_URL = process.env.REACT_APP_PROXY_URL;
+
 function SearchUser() {
   const { user, isAuthenticated } = useContext(userContext);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const [skill, setSkill] = useState('all'); // Default to 'all' users
+  const [skill, setSkill] = useState('all');
   
   const fetchUsers = async (skill) => {
-    setLoading(true); // Set loading to true while fetching
+    setLoading(true);
     try {
-      const response = await axios.get(`/get_all_users?skill=${skill}`);
+      const response = await axios.get(`${API_BASE_URL}/get_all_users?skill=${skill}`);
       if (response.data.success) {
         setUsers(response.data.data);
       } else {
@@ -26,7 +28,7 @@ function SearchUser() {
     } catch (err) {
       toast.error('Failed to fetch users.');
     } finally {
-      setLoading(false); // Set loading to false once fetching is done
+      setLoading(false);
     }
   };
 
@@ -43,7 +45,7 @@ function SearchUser() {
     if (!confirmed) return;
     
     try {
-      const response = await fetch('/delete_account', {
+      const response = await fetch(`${API_BASE_URL}/delete_account`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
