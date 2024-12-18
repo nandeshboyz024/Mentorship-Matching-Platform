@@ -133,6 +133,8 @@ function ViewProfile() {
             <p style={{ color: '#7f8000' }}>{bio}</p>
           </div>
           <div style={{ marginBottom: '10px' }}>
+            <p><em style={{color:'#777'}}>***The interested skill is highlighted in <span style={{color:'green'}}>green</span> color.***</em></p>
+            <hr />
             <strong style={{ color: '#7f8000' }}>• Programming languages:</strong>
             <span style={{ color: skills.isPython ? 'green' : '#777' }}> Python</span>,
             <span style={{ color: skills.isJava ? 'green' : '#777' }}> Java</span>,
